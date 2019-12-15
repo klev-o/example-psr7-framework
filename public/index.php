@@ -1,5 +1,6 @@
 <?php
 
+use Framework\Http\ResponseSender;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -17,19 +18,6 @@ $response = (new HtmlResponse('Hello, ' . $name . '!'))
     ->withHeader('X-MyHeader', 'Hello World');
 
 ### Sending
-//header('HTTP/1.0 ' . $response->getStatusCode() . ' ' . $response->getReasonPhrase());
-header(sprintf(
-    'HTTP/%s %d %s',
-    $response->getProtocolVersion(),
-    $response->getStatusCode(),
-    $response->getReasonPhrase()
-));
 
-
-foreach ($response->getHeaders() as $name => $values) {
-    //header($name . ':' . implode(', ', $values));
-    foreach ($values as $value) {
-        header(sprintf('%s: %s', $name, $value), false);
-    }
-}
-echo $response->getBody();
+$emitter = new ResponseSender();
+$emitter->send($response);
