@@ -14,8 +14,10 @@ $request = ServerRequestFactory::fromGlobals();
 ### Action
 $name = $request->getQueryParams()['name'] ?? 'Guest';
 
-$response = (new HtmlResponse('Hello, ' . $name . '!'))
-    ->withHeader('X-MyHeader', 'Hello World');
+$response = new HtmlResponse('Hello, ' . $name . '!');
+
+### Postprocessing
+$response = $response->withHeader('X-MyHeader', 'Hello World');
 
 ### Sending
 
