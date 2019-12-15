@@ -5,6 +5,7 @@
   "require": {
     "php": ">=7.1.0",
     "psr/http-message": "^1.0",
+    "zendframework/zend-diactoros": "^1.6",
     "roave/security-advisories": "dev-master"
   },
   "require-dev": {
