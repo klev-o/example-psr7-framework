@@ -7,7 +7,7 @@ chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 ### Initialization
-$request = new Request();
+$request = new Request($_GET, $_POST);
 
 ### Action
 $name = $request->getQueryParams()['name'] ?? 'Guest';
