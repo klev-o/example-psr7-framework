@@ -1,5 +1,6 @@
 <?php
 
+use Framework\Http\ActionResolver;
 use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\RouteMap;
 use Framework\Http\Router\Router;
@@ -16,13 +17,14 @@ require 'vendor/autoload.php';
 
 $routes = new RouteMap();
 
-$routes->get('home', '/', new Action\HelloAction());
-$routes->get('about', '/cat', new Action\CatAction());
-$routes->get('blog', '/blog', new Action\Blog\IndexAction());
-$routes->get('blog.show', '/blog/{id}', new Action\Blog\ShowAction(), ['id' => '\d+']);
+$routes->get('home', '/', Action\HelloAction::class);
+$routes->get('about', '/cat', Action\CatAction::class);
+$routes->get('blog', '/blog', Action\Blog\IndexAction::class);
+$routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class, ['id' => '\d+']);
 
 
 $router = new Router($routes);
+$resolver = new ActionResolver();
 
 ### Running
 $request = ServerRequestFactory::fromGlobals();
@@ -32,8 +34,9 @@ try {
     foreach ($result->getAttributes() as $attribute => $value) {
         $request = $request->withAttribute($attribute, $value);
     }
+    $handler = $result->getHandler();
     /** @var callable $action */
-    $action = $result->getHandler();
+    $action = $resolver->resolve($result->getHandler());
     $response = $action($request);
 } catch (RequestNotMatchedException $e){
     $response = new HtmlResponse('Undefined page', 404);
