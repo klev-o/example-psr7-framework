@@ -1,5 +1,8 @@
 <?php
 
+use Framework\Http\Router\Exception\RequestNotMatchedException;
+use Framework\Http\Router\RouteMap;
+use Framework\Http\Router\Router;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\JsonResponse;
@@ -11,52 +14,48 @@ chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 ### Initialization
+
+$routes = new RouteMap();
+
+$routes->get('home', '/', function (ServerRequestInterface $request) {
+    $name = $request->getQueryParams()['name'] ?? 'Guest';
+    return new HtmlResponse('Hello, ' . $name . '!');
+});
+
+$routes->get('cat', '/cat', function () {
+    return new HtmlResponse('I am cat');
+});
+
+$routes->get('blog', '/blog', function () {
+    return new JsonResponse([
+        ['id' => 1, 'title' => '1 Post'],
+        ['id' => 2, 'title' => '2 Post'],
+    ]);
+});
+
+$routes->get('blog.show', '/blog/{id}', function (ServerRequestInterface $request) {
+    $id = $request->getAttribute('id');
+    if ($id > 2) {
+        return new HtmlResponse('Undefined page', 404);
+    }
+    return new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
+}, ['id' => '\d+']);
+
+
+$router = new Router($routes);
+
+### Running
 $request = ServerRequestFactory::fromGlobals();
 
-### Action
-$action = null;
-$path = $request->getUri()->getPath();
-
-if ($path === '/') {
-
-    $action = function (ServerRequestInterface $request) {
-        $name = $request->getQueryParams()['name'] ?? 'Guest';
-        return new HtmlResponse('Hello, ' . $name . '!');
-    };
-
-} elseif ($path === '/cat') {
-
-    $action = function () {
-        return new HtmlResponse('I am a cat');
-    };
-
-
-} elseif ($path === '/blog') {
-
-    $action = function () {
-        return new JsonResponse([
-            ['id' => 1, 'title' => '1 Post'],
-            ['id' => 2, 'title' => '2 Post'],
-        ]);
-    };
-
-} elseif (preg_match('#^/blog/(?P<id>\d+)$#i', $path, $matches)) {
-
-    $request = $request->withAttribute('id', $matches['id']);
-
-    $action = function (ServerRequestInterface $request) {
-        $id = $request->getAttribute('id');
-        if ($id > 2) {
-            return new JsonResponse(['error' => 'Undefined page'], 404);
-        }
-        return new JsonResponse(['id' => $id, 'title' => 'Post #' . $id]);
-    };
-
-}
-
-if ($action) {
+try {
+    $result = $router->match($request);
+    foreach ($result->getAttributes() as $attribute => $value) {
+        $request = $request->withAttribute($attribute, $value);
+    }
+    /** @var callable $action */
+    $action = $result->getHandler();
     $response = $action($request);
-} else {
+} catch (RequestNotMatchedException $e){
     $response = new HtmlResponse('Undefined page', 404);
 }
 
