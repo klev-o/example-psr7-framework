@@ -13,12 +13,17 @@ chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
 ### Initialization
+
+$config = [
+    'users' => ['admin' => 'password'],
+];
+
 $aura = new Aura\Router\RouterContainer();
 $routes = $aura->getMap();
 
 $routes->get('home', '/', Action\HelloAction::class);
 $routes->get('cat', '/cat', Action\CatAction::class);
-$routes->get('cabinet', '/cabinet', Action\CabinetAction::class);
+$routes->get('cabinet', '/cabinet', new Action\CabinetAction($config['users']));
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
 $routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class)->tokens(['id' => '\d+']);
 
