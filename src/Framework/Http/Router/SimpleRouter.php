@@ -14,6 +14,7 @@ class SimpleRouter implements Router
     {
         $this->routes = $routes;
     }
+
     public function match(ServerRequestInterface $request): Result
     {
         foreach ($this->routes->getRoutes() as $route) {
@@ -23,6 +24,7 @@ class SimpleRouter implements Router
         }
         throw new RequestNotMatchedException($request);
     }
+
     public function generate($name, array $params = []): string
     {
         foreach ($this->routes->getRoutes() as $route) {
