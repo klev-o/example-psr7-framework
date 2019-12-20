@@ -9,7 +9,6 @@ class HelloAction
 {
     public function __invoke(ServerRequestInterface $request)
     {
-        throw new \Exception('ewqewq');
         $name = $request->getQueryParams()['name'] ?? 'Guest';
         return new HtmlResponse('Hello, ' . $name . '!');
     }

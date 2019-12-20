@@ -3,6 +3,7 @@
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Application;
+use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use App\Http\Action;
@@ -45,7 +46,7 @@ $app->pipe(new Framework\Http\Middleware\DispatchMiddleware($resolver));
 
 ### Running
 $request = ServerRequestFactory::fromGlobals();
-$response = $app->run($request);
+$response = $app->run($request, new Response());
 
 ### Sending
 
