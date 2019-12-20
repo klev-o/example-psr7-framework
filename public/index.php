@@ -1,6 +1,5 @@
 <?php
 
-use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Application;
@@ -16,7 +15,7 @@ require 'vendor/autoload.php';
 ### Initialization
 
 $config = [
-    'debug' => false,
+    'debug' => true,
     'users' => ['admin' => 'password'],
 ];
 
