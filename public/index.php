@@ -16,6 +16,7 @@ require 'vendor/autoload.php';
 ### Initialization
 
 $config = [
+    'debug' => false,
     'users' => ['admin' => 'password'],
 ];
 
@@ -36,6 +37,8 @@ $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver();
 
 $app = new Application($resolver, new Middleware\NotFoundHandler());
+
+$app->pipe(new Middleware\ErrorHandlerMiddleware($config['debug']));
 $app->pipe(Middleware\ProfilerMiddleware::class);
 $app->pipe(Middleware\CredentialsMiddleware::class);
 
