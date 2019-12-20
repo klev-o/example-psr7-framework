@@ -26,10 +26,13 @@ $routes = $aura->getMap();
 $routes->get('home', '/', Action\HelloAction::class);
 $routes->get('cat', '/cat', Action\CatAction::class);
 $routes->get('cabinet', '/cabinet', function (ServerRequestInterface $request) use ($config) {
+    $profiler = new Middleware\ProfilerMiddleware();
     $auth = new Middleware\BasicAuthMiddleware($config['users']);
     $cabinet = new Action\CabinetAction();
-    return $auth($request, function (ServerRequestInterface $request) use ($cabinet) {
-        return $cabinet($request);
+    return $profiler($request, function (ServerRequestInterface $request) use ($auth, $cabinet) {
+        return $auth($request, function (ServerRequestInterface $request) use ($cabinet) {
+            return $cabinet($request);
+        });
     });
 });
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
