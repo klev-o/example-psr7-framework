@@ -17,7 +17,8 @@ $aura = new Aura\Router\RouterContainer();
 $routes = $aura->getMap();
 
 $routes->get('home', '/', Action\HelloAction::class);
-$routes->get('about', '/cat', Action\CatAction::class);
+$routes->get('cat', '/cat', Action\CatAction::class);
+$routes->get('cabinet', '/cabinet', Action\CabinetAction::class);
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
 $routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class)->tokens(['id' => '\d+']);
 
