@@ -2,8 +2,8 @@
 
 use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\AuraRouterAdapter;
-use Framework\Http\Pipeline\Pipeline;
 use Framework\Http\Pipeline\MiddlewareResolver;
+use Framework\Http\Application;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use App\Http\Action;
@@ -34,8 +34,9 @@ $routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class)->tokens([
 
 $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver();
-$pipeline = new Pipeline();
-$pipeline->pipe($resolver->resolve(Middleware\ProfilerMiddleware::class));
+
+$app = new Application($resolver);
+$app->pipe(Middleware\ProfilerMiddleware::class);
 
 ### Running
 $request = ServerRequestFactory::fromGlobals();
@@ -45,13 +46,12 @@ try {
     foreach ($result->getAttributes() as $attribute => $value) {
         $request = $request->withAttribute($attribute, $value);
     }
-    $handler = $result->getHandler();
-    $pipeline->pipe($resolver->resolve($handler));
+    $app->pipe($result->getHandler());
 
 } catch (RequestNotMatchedException $e){
 }
 
-$response = $pipeline($request, new Middleware\NotFoundHandler());
+$response = $app($request, new Middleware\NotFoundHandler());
 
 ### Postprocessing
 $response = $response->withHeader('X-MyHeader', 'Hello World');
