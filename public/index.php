@@ -37,6 +37,7 @@ $resolver = new MiddlewareResolver();
 
 $app = new Application($resolver, new Middleware\NotFoundHandler());
 $app->pipe(Middleware\ProfilerMiddleware::class);
+$app->pipe(Middleware\CredentialsMiddleware::class);
 
 ### Running
 $request = ServerRequestFactory::fromGlobals();
@@ -52,9 +53,6 @@ try {
 }
 
 $response = $app->run($request);
-
-### Postprocessing
-$response = $response->withHeader('X-MyHeader', 'Hello World');
 
 ### Sending
 
