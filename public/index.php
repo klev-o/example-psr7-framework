@@ -3,6 +3,7 @@
 use Framework\Http\ActionResolver;
 use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\AuraRouterAdapter;
+use Framework\Http\Pipeline\Pipeline;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\ServerRequestFactory;
@@ -26,13 +27,12 @@ $routes = $aura->getMap();
 $routes->get('home', '/', Action\HelloAction::class);
 $routes->get('cat', '/cat', Action\CatAction::class);
 $routes->get('cabinet', '/cabinet', function (ServerRequestInterface $request) use ($config) {
-    $profiler = new Middleware\ProfilerMiddleware();
-    $auth = new Middleware\BasicAuthMiddleware($config['users']);
-    $cabinet = new Action\CabinetAction();
-    return $profiler($request, function (ServerRequestInterface $request) use ($auth, $cabinet) {
-        return $auth($request, function (ServerRequestInterface $request) use ($cabinet) {
-            return $cabinet($request);
-        });
+    $pipeline = new Pipeline();
+    $pipeline->pipe(new Middleware\ProfilerMiddleware());
+    $pipeline->pipe(new Middleware\BasicAuthMiddleware($config['users']));
+    $pipeline->pipe(new Action\CabinetAction());
+    return $pipeline($request, function () {
+        return new HtmlResponse('Undefined page', 404);
     });
 });
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
