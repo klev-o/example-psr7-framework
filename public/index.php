@@ -34,7 +34,7 @@ $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
 $routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class)->tokens(['id' => '\d+']);
 
 $router = new AuraRouterAdapter($aura);
-$resolver = new MiddlewareResolver();
+$resolver = new MiddlewareResolver(new Response());
 
 $app = new Application($resolver, new Middleware\NotFoundHandler());
 
@@ -46,7 +46,7 @@ $app->pipe(new Framework\Http\Middleware\DispatchMiddleware($resolver));
 
 ### Running
 $request = ServerRequestFactory::fromGlobals();
-$response = $app->run($request, new Response());
+$response = $app->handle($request);
 
 ### Sending
 
