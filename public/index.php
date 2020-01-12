@@ -25,13 +25,10 @@ $routes = $aura->getMap();
 
 $routes->get('home', '/', Action\HelloAction::class);
 $routes->get('cat', '/cat', Action\CatAction::class);
-$routes->get('cabinet', '/cabinet', [
-    Middleware\ProfilerMiddleware::class,
-    new Middleware\BasicAuthMiddleware($config['users']),
-    Action\CabinetAction::class,
-]);
+$routes->get('cabinet', '/cabinet', Action\CabinetAction::class);
 $routes->get('blog', '/blog', Action\Blog\IndexAction::class);
 $routes->get('blog.show', '/blog/{id}', Action\Blog\ShowAction::class)->tokens(['id' => '\d+']);
+
 
 $router = new AuraRouterAdapter($aura);
 $resolver = new MiddlewareResolver(new Response());
@@ -42,6 +39,7 @@ $app->pipe(new Middleware\ErrorHandlerMiddleware($config['debug']));
 $app->pipe(Middleware\ProfilerMiddleware::class);
 $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(new Framework\Http\Middleware\RouteMiddleware($router));
+$app->pipe('cabinet', new Middleware\BasicAuthMiddleware($config['users'], new Response()));
 $app->pipe(new Framework\Http\Middleware\DispatchMiddleware($resolver));
 
 ### Running

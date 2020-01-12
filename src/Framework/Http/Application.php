@@ -5,10 +5,9 @@ namespace Framework\Http;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-
+use Zend\Stratigility\Middleware\PathMiddlewareDecorator;
 use Zend\Stratigility\MiddlewarePipe;
 
 class Application implements MiddlewareInterface, RequestHandlerInterface
@@ -28,8 +27,9 @@ class Application implements MiddlewareInterface, RequestHandlerInterface
     {
         if ($middleware === null) {
             $this->pipeline->pipe($this->resolver->resolve($path));
+        } else {
+            $this->pipeline->pipe(new PathMiddlewareDecorator($path, $this->resolver->resolve($middleware)));
         }
-        $this->pipeline->pipe($this->resolver->resolve($path));
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
