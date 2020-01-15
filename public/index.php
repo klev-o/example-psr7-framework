@@ -22,10 +22,10 @@ $container->set('config', [
     'users' => ['admin' => 'password'],
 ]);
 
-$container->set('middleware.basic_auth', function (Container $container) {
+$container->set(Middleware\BasicAuthMiddleware::class, function (Container $container) {
     return new Middleware\BasicAuthMiddleware($container->get('config')['users'], new Response());
 });
-$container->set('middleware.error_handler', function (Container $container) {
+$container->set(Middleware\ErrorHandlerMiddleware::class, function (Container $container) {
     return new Middleware\ErrorHandlerMiddleware($container->get('config')['debug']);
 });
 
@@ -46,11 +46,11 @@ $resolver = new MiddlewareResolver(new Response());
 
 $app = new Application($resolver, new Middleware\NotFoundHandler());
 
-$app->pipe($container->get('middleware.error_handler'));
+$app->pipe($container->get(Middleware\ErrorHandlerMiddleware::class));
 $app->pipe(Middleware\ProfilerMiddleware::class);
 $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(new Framework\Http\Middleware\RouteMiddleware($router));
-$app->pipe('cabinet', $container->get('middleware.basic_auth'));
+$app->pipe('cabinet', $container->get(Middleware\BasicAuthMiddleware::class));
 $app->pipe(new Framework\Http\Middleware\DispatchMiddleware($resolver));
 
 ### Running
