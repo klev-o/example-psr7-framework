@@ -1,5 +1,6 @@
 <?php
 
+use Framework\Container\Container;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Application;
@@ -15,10 +16,11 @@ require 'vendor/autoload.php';
 
 ### Initialization
 
-$config = [
+$container = new Container();
+$container->set('config', [
     'debug' => true,
     'users' => ['admin' => 'password'],
-];
+]);
 
 $aura = new Aura\Router\RouterContainer();
 $routes = $aura->getMap();
@@ -35,11 +37,11 @@ $resolver = new MiddlewareResolver(new Response());
 
 $app = new Application($resolver, new Middleware\NotFoundHandler());
 
-$app->pipe(new Middleware\ErrorHandlerMiddleware($config['debug']));
+$app->pipe(new Middleware\ErrorHandlerMiddleware($container->get('config')['debug']));
 $app->pipe(Middleware\ProfilerMiddleware::class);
 $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(new Framework\Http\Middleware\RouteMiddleware($router));
-$app->pipe('cabinet', new Middleware\BasicAuthMiddleware($config['users'], new Response()));
+$app->pipe('cabinet', new Middleware\BasicAuthMiddleware($container->get('config')['users'], new Response()));
 $app->pipe(new Framework\Http\Middleware\DispatchMiddleware($resolver));
 
 ### Running
