@@ -37,4 +37,15 @@ class ContainerTest extends TestCase
         self::assertNotNull($value = $container->get($name));
         self::assertInstanceOf(\stdClass::class, $value);
     }
+
+    public function testSingleton()
+    {
+        $container = new Container();
+        $container->set($name = 'name', function () {
+            return new \stdClass();
+        });
+        self::assertNotNull($value1 = $container->get($name));
+        self::assertNotNull($value2 = $container->get($name));
+        self::assertSame($value1, $value2);
+    }
 }
