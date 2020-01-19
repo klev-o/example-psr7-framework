@@ -61,4 +61,17 @@ class ContainerTest extends TestCase
         self::assertObjectHasAttribute('param', $object = $container->get($name));
         self::assertEquals($value, $object->param);
     }
+
+    public function testAutoInstantiating()
+    {
+        $container = new Container();
+
+        self::assertNotNull($value1 = $container->get(\stdClass::class));
+        self::assertNotNull($value2 = $container->get(\stdClass::class));
+
+        self::assertInstanceOf(\stdClass::class, $value1);
+        self::assertInstanceOf(\stdClass::class, $value2);
+
+        self::assertSame($value1, $value2);
+    }
 }
