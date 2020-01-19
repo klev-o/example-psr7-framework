@@ -24,11 +24,17 @@ class Container
         }
         return $this->results[$id];
     }
+
     public function set($id, $value): void
     {
         if (array_key_exists($id, $this->results)) {
             unset($this->results[$id]);
         }
         $this->definitions[$id] = $value;
+    }
+
+    public function has($id): bool
+    {
+        return array_key_exists($id, $this->definitions);
     }
 }
