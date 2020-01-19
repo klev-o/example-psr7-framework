@@ -1,12 +1,12 @@
 <?php
 
-use Framework\Container\Container;
+use Framework\Container\ContainerInterface;
 use Framework\Http\Application;
 use Zend\Diactoros\ServerRequestFactory;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 
 /**
- * @var Container $container
+ * @var ContainerInterface $container
  * @var Application $app
  */
 
