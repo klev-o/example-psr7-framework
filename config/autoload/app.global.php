@@ -17,7 +17,7 @@ return [
             Application::class => function (ContainerInterface $container) {
                 return new Application(
                     $container->get(MiddlewareResolver::class),
-                    $container->get(Framework\Http\Router\Router::class),
+                    $container->get(Router::class),
                     new Middleware\NotFoundHandler()
                 );
             },
@@ -27,12 +27,10 @@ return [
             MiddlewareResolver::class => function (ContainerInterface $container) {
                 return new MiddlewareResolver(new Response(), $container);
             },
-            Middleware\BasicAuthMiddleware::class => function (ContainerInterface $container) {
-                return new Middleware\BasicAuthMiddleware($container->get('config')['users'], new Response());
-            },
             Middleware\ErrorHandlerMiddleware::class => function (ContainerInterface $container) {
                 return new Middleware\ErrorHandlerMiddleware($container->get('config')['debug']);
             },
         ],
     ],
+    'debug' => false,
 ];
