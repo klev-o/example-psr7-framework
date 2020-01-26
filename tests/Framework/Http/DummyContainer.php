@@ -2,7 +2,7 @@
 
 namespace Tests\Framework\Http;
 
-use Framework\Container\ServiceNotFoundException;
+use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Psr\Container\ContainerInterface;
 
 class DummyContainer implements ContainerInterface
