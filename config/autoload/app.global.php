@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Middleware;
-use Framework\Template\TemplateRenderer;
+use Framework\Template\PhpRenderer;
 use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Router;
+use Framework\Template\TemplateRenderer;
 use Psr\Container\ContainerInterface;
 use Zend\Diactoros\Response;
 
@@ -32,7 +33,7 @@ return [
                 return new Middleware\ErrorHandlerMiddleware($container->get('config')['debug']);
             },
             TemplateRenderer::class => function () {
-                return new TemplateRenderer('views');
+                return new PhpRenderer('views');
             },
         ],
     ],
