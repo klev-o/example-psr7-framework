@@ -8,9 +8,11 @@
 
 <?php $this->params['title'] = 'Cat'; ?>
 
-<ul class="breadcrumb">
-    <li><a href="/">Home</a></li>
-    <li class="active">Cat</li>
-</ul>
+<?php $this->beginBlock('breadcrumbs') ?>
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Cat</li>
+    </ul>
+<?php $this->endBlock() ?>
 
 <h1>I am a cat</h1>
