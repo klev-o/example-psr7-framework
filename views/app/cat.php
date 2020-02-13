@@ -19,4 +19,7 @@
     </ul>
 <?php $this->endBlock() ?>
 
-<h1>I am a cat</h1>
+<?php $this->beginBlock('content') ?>
+    <h1>I am a cat</h1>
+<?php $this->endBlock() ?>
+
