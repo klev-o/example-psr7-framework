@@ -4,7 +4,7 @@
  */
 ?>
 
-<?php $this->extend('layout/default'); ?>
+<?php $this->extend('layout/columns'); ?>
 
 <?php $this->beginBlock('title') ?>Cat<?php $this->endBlock() ?>
 
@@ -19,7 +19,7 @@
     </ul>
 <?php $this->endBlock() ?>
 
-<?php $this->beginBlock('content') ?>
+<?php $this->beginBlock('main') ?>
     <h1>I am a cat</h1>
 <?php $this->endBlock() ?>
 
