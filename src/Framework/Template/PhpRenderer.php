@@ -85,6 +85,12 @@ class PhpRenderer implements TemplateRenderer
         return $block ?? '';
     }
 
+    public function e($string): string
+    {
+        return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
+
+    }
+
     private function hasBlock($name): bool
     {
         return array_key_exists($name, $this->blocks);
