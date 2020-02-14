@@ -1,4 +1,12 @@
+<?php
+
+/**
+ * @var \Framework\Template\PhpRenderer $this
+ */
+
+?>
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -25,14 +33,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="<?= $this->e($this->path('home')) ?>">
                     Application
                 </a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/cat"><i class="glyphicon glyphicon-book"></i> Cat</a></li>
-                    <li><a href="/cabinet"><i class="glyphicon glyphicon-user"></i> Cabinet</a></li>
+                    <li><a href="<?= $this->e($this->path('cat')) ?>"><i class="glyphicon glyphicon-book"></i> Cat</a></li>
+                    <li><a href="<?= $this->e($this->path('cabinet')) ?>"><i class="glyphicon glyphicon-user"></i> Cabinet</a></li>
                 </ul>
             </div>
         </div>
