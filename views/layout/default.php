@@ -39,6 +39,7 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="<?= $this->e($this->path('blog')) ?>"><i class="glyphicon glyphicon-book"></i> Blog</a></li>
                     <li><a href="<?= $this->e($this->path('cat')) ?>"><i class="glyphicon glyphicon-book"></i> Cat</a></li>
                     <li><a href="<?= $this->e($this->path('cabinet')) ?>"><i class="glyphicon glyphicon-user"></i> Cabinet</a></li>
                 </ul>
