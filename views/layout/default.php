@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var \Framework\Template\PhpRenderer $this
+ * @var \Framework\Template\Php\PhpRenderer $this
  */
 
 ?>

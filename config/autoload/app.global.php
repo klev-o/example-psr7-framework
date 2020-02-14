@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Middleware;
-use Framework\Template\PhpRenderer;
 use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Router;
 use Framework\Template\TemplateRenderer;
+use Framework\Template\Php\PhpRenderer;
+use Framework\Template\Php\Extension\RouteExtension;
 use Psr\Container\ContainerInterface;
 use Zend\Diactoros\Response;
 
@@ -36,7 +37,10 @@ return [
                 );
             },
             TemplateRenderer::class => function (ContainerInterface $container) {
-                return new PhpRenderer('views', $container->get(Router::class));
+                //return new PhpRenderer('views', $container->get(Router::class));
+                $renderer = new PhpRenderer('views');
+                $renderer->addExtension($container->get(RouteExtension::class));
+                return $renderer;
             },
         ],
     ],
