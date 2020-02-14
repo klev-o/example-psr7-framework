@@ -22,21 +22,26 @@ class PhpRenderer implements TemplateRenderer
 
     public function render($name, array $params = []): string
     {
+        $level = ob_get_level();
         $_templateFile_ = $this->path . '/' . $name . '.php';
-        ob_start();
-        extract($params, EXTR_OVERWRITE);
-        $this->extend = null;
-        require $_templateFile_;
 
-        $content = ob_get_clean();
+        $this->extend = null;
+
+        try {
+            ob_start();
+            extract($params, EXTR_OVERWRITE);
+            require $_templateFile_;
+            $content = ob_get_clean();
+        } catch (\Throwable|\Exception $e) {
+            while (ob_get_level() > $level) {
+                ob_end_clean();
+            }
+            throw $e;
+        }
 
         if (!$this->extend) {
             return $content;
         }
-
-//        return $this->render($this->extend, [
-//            'content' => $content,
-//        ]);
 
         return $this->render($this->extend);
     }
