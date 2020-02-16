@@ -2,8 +2,8 @@
 
 namespace App\Http\Action;
 
-use Zend\Diactoros\Response\HtmlResponse;
 use Framework\Template\TemplateRenderer;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 class CatAction
 {

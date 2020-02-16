@@ -1,10 +1,9 @@
 <?php
 
 use App\Http\Middleware;
-use Framework\Container\Container;
 use Framework\Http\Application;
 
-/** @var Container $container */
+/** @var Laminas\ServiceManager\ServiceManager $container */
 /** @var Application $app */
 
 //$app->pipe($container->get(Middleware\ErrorHandlerMiddleware::class));

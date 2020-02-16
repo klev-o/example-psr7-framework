@@ -6,13 +6,14 @@ use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapter;
 use Framework\Http\Router\Router;
 use Framework\Template\TemplateRenderer;
+use Laminas\Diactoros\Response;
+use Laminas\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
 use Psr\Container\ContainerInterface;
-use Zend\Diactoros\Response;
 
 return [
     'dependencies' => [
         'abstract_factories' => [
-            Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory::class,
+            ReflectionBasedAbstractFactory::class,
         ],
         'factories' => [
             Application::class => function (ContainerInterface $container) {

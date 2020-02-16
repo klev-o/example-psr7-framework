@@ -3,7 +3,7 @@
 namespace App\Http\Action;
 
 use Framework\Template\TemplateRenderer;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 class HelloAction
 {

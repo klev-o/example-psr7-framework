@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Framework\Template\TemplateRenderer;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\HtmlResponse;
 
 class ErrorHandlerMiddleware
 {

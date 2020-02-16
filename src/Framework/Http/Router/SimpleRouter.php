@@ -34,4 +34,9 @@ class SimpleRouter implements Router
         }
         throw new RouteNotFoundException($name, $params);
     }
+
+    public function addRoute(RouteData $data): void
+    {
+        // TODO: Implement addRoute() method.
+    }
 }

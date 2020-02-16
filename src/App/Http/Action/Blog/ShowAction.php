@@ -4,8 +4,8 @@ namespace App\Http\Action\Blog;
 
 use App\ReadModel\PostReadRepository;
 use Framework\Template\TemplateRenderer;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\HtmlResponse;
 
 class ShowAction
 {

@@ -4,7 +4,7 @@ namespace App\Http\Action\Blog;
 
 use App\ReadModel\PostReadRepository;
 use Framework\Template\TemplateRenderer;
-use Zend\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
 
 class IndexAction
 {

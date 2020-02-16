@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Middleware\BasicAuthMiddleware;
+use Laminas\Diactoros\Response;
 use Psr\Container\ContainerInterface;
-use Zend\Diactoros\Response;
 
 return [
     'dependencies' => [
