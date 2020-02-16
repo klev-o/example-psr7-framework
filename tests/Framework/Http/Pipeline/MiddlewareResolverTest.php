@@ -2,17 +2,17 @@
 
 namespace Tests\Framework\Http\Pipeline;
 
-use Framework\Http\Pipeline\MiddlewareResolver;
-use PHPUnit\Framework\TestCase;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use PHPUnit\Framework\TestCase;
+use Framework\Http\Pipeline\MiddlewareResolver;
 use Tests\Framework\Http\DummyContainer;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\Response\EmptyResponse;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\ServerRequest;
 
 class MiddlewareResolverTest extends TestCase
 {
