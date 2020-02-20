@@ -3,13 +3,14 @@
 namespace App\Http\Middleware\ErrorHandler;
 
 use Framework\Template\TemplateRenderer;
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Stratigility\Utils;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PrettyErrorResponseGenerator implements ErrorResponseGenerator
 {
-    private $debug;
     private $template;
     private $views;
 
@@ -21,21 +22,13 @@ class PrettyErrorResponseGenerator implements ErrorResponseGenerator
 
     public function generate(\Throwable $e, ServerRequestInterface $request): ResponseInterface
     {
-        $code = self::getStatusCode($e);
+        $code = Utils::getStatusCode($e, new Response());
         return new HtmlResponse($this->template->render($this->getView($code), [
             'request' => $request,
             'exception' => $e,
         ]), $code);
     }
 
-    private static function getStatusCode(\Throwable $e) : int
-    {
-        $code = $e->getCode();
-        if ($code >= 400 && $code < 600) {
-            return $code;
-        }
-        return 500;
-    }
     private function getView($code): string
     {
         if (array_key_exists($code, $this->views)) {
