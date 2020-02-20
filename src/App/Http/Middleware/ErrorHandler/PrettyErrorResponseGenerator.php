@@ -11,21 +11,21 @@ class PrettyErrorResponseGenerator implements ErrorResponseGenerator
 {
     private $debug;
     private $template;
+    private $views;
 
-    public function __construct(bool $debug, TemplateRenderer $template)
+    public function __construct(TemplateRenderer $template, array $views)
     {
-        $this->debug = $debug;
         $this->template = $template;
+        $this->views = $views;
     }
 
     public function generate(\Throwable $e, ServerRequestInterface $request): ResponseInterface
     {
-        $view = $this->debug ? 'error/error-debug' : 'error/error';
-
-        return new HtmlResponse($this->template->render($view, [
+        $code = self::getStatusCode($e);
+        return new HtmlResponse($this->template->render($this->getView($code), [
             'request' => $request,
             'exception' => $e,
-        ]), self::getStatusCode($e));
+        ]), $code);
     }
 
     private static function getStatusCode(\Throwable $e) : int
@@ -36,4 +36,14 @@ class PrettyErrorResponseGenerator implements ErrorResponseGenerator
         }
         return 500;
     }
+    private function getView($code): string
+    {
+        if (array_key_exists($code, $this->views)) {
+            $view = $this->views[$code];
+        } else {
+            $view = $this->views['error'];
+        }
+        return $view;
+    }
+
 }
