@@ -4,10 +4,12 @@ namespace App\Http\Action;
 
 use Framework\Template\TemplateRenderer;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use App\Http\Middleware\BasicAuthMiddleware;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class CabinetAction
+class CabinetAction implements RequestHandlerInterface
 {
     private $template;
 
@@ -16,7 +18,7 @@ class CabinetAction
         $this->template = $template;
     }
 
-    public function __invoke(ServerRequestInterface $request)
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $username = $request->getAttribute(BasicAuthMiddleware::ATTRIBUTE);
 

@@ -5,8 +5,11 @@ namespace App\Http\Action\Blog;
 use App\ReadModel\PostReadRepository;
 use Framework\Template\TemplateRenderer;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class IndexAction
+class IndexAction implements RequestHandlerInterface
 {
     private $posts;
     private $template;
@@ -17,7 +20,7 @@ class IndexAction
         $this->template = $template;
     }
 
-    public function __invoke()
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $posts = $this->posts->getAll();
 
