@@ -5,6 +5,7 @@ use App\Http\Middleware\ErrorHandler\PrettyErrorResponseGenerator;
 use App\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware;
 use App\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
 use App\Http\Middleware\ErrorHandler\DebugErrorResponseGenerator;
+use App\Http\Middleware\ErrorHandler\WhoopsErrorResponseGenerator;
 use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapter;
@@ -40,10 +41,14 @@ return [
             },
             ErrorResponseGenerator::class => function (ContainerInterface $container) {
                 if ($container->get('config')['debug']) {
-                    return new DebugErrorResponseGenerator(
-                        $container->get(TemplateRenderer::class),
-                        new Laminas\Diactoros\Response(),
-                        'error/error-debug'
+//                    return new DebugErrorResponseGenerator(
+//                        $container->get(TemplateRenderer::class),
+//                        new Laminas\Diactoros\Response(),
+//                        'error/error-debug'
+//                    );
+                    return new WhoopsErrorResponseGenerator(
+                        $container->get(Whoops\RunInterface::class),
+                        new Laminas\Diactoros\Response()
                     );
                 }
                 return new PrettyErrorResponseGenerator(
@@ -55,7 +60,15 @@ return [
                         'error' => 'error/error',
                     ]
                 );
-            }
+            },
+            Whoops\RunInterface::class => function () {
+                $whoops = new Whoops\Run();
+                $whoops->writeToOutput(false);
+                $whoops->allowQuit(false);
+                $whoops->pushHandler(new Whoops\Handler\PrettyPageHandler());
+                $whoops->register();
+                return $whoops;
+            },
         ],
     ],
     'debug' => true,
