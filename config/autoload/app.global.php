@@ -2,6 +2,7 @@
 
 use App\Http\Middleware;
 use Infrastructure\Framework\Http\Middleware\ErrorHandler\PrettyErrorResponseGenerator;
+use Infrastructure\Framework\Http\Middleware\ErrorHandler\LogErrorListener;
 use App\Http\Middleware\ErrorHandler\DebugErrorResponseGenerator;
 use Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware;
 use Framework\Http\Middleware\ErrorHandler\WhoopsErrorResponseGenerator;
@@ -35,10 +36,15 @@ return [
                 return new MiddlewareResolver(new Response(), $container);
             },
             ErrorHandlerMiddleware::class => function (ContainerInterface $container) {
-                return new ErrorHandlerMiddleware(
-                    $container->get(ErrorResponseGenerator::class),
-                    $container->get(Psr\Log\LoggerInterface::class)
+//                return new ErrorHandlerMiddleware(
+//                    $container->get(ErrorResponseGenerator::class),
+//                    $container->get(Psr\Log\LoggerInterface::class)
+//                );
+                $middleware =  new ErrorHandlerMiddleware(
+                    $container->get(ErrorResponseGenerator::class)
                 );
+                $middleware->addListener($container->get(LogErrorListener::class));
+                return $middleware;
             },
             ErrorResponseGenerator::class => function (ContainerInterface $container) {
                 if ($container->get('config')['debug']) {
