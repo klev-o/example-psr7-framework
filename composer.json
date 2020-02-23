@@ -24,7 +24,8 @@
     "psr-4": {
       "Framework\\": "src/Framework/",
       "Tests\\": "tests/",
-      "App\\": "src/App/"
+      "App\\": "src/App/",
+      "Infrastructure\\": "src/Infrastructure/"
     }
   },
   "scripts": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware\ErrorHandler;
+namespace Framework\Http\Middleware\ErrorHandler;
 
 use Laminas\Stratigility\Utils;
 use Psr\Http\Message\ResponseInterface;

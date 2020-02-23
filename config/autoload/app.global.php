@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Middleware;
-use App\Http\Middleware\ErrorHandler\PrettyErrorResponseGenerator;
-use App\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware;
-use App\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
+use Infrastructure\Framework\Http\Middleware\ErrorHandler\PrettyErrorResponseGenerator;
 use App\Http\Middleware\ErrorHandler\DebugErrorResponseGenerator;
-use App\Http\Middleware\ErrorHandler\WhoopsErrorResponseGenerator;
+use Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware;
+use Framework\Http\Middleware\ErrorHandler\WhoopsErrorResponseGenerator;
+use Framework\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
 use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\AuraRouterAdapter;
