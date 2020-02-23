@@ -9,6 +9,7 @@ use Framework\Http\Application;
 //$app->pipe($container->get(Middleware\ErrorHandlerMiddleware::class));
 //$app->pipe(Middleware\ErrorHandlerMiddleware::class);
 $app->pipe(Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware::class);
+$app->pipe(Middleware\ResponseLoggerMiddleware::class);
 $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(Middleware\ProfilerMiddleware::class);
 //$app->pipe($container->get(Framework\Http\Middleware\RouteMiddleware::class));
