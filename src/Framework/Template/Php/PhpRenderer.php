@@ -105,7 +105,6 @@ class PhpRenderer implements TemplateRenderer
     public function e($string): string
     {
         return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
-
     }
 
     private function hasBlock($name): bool

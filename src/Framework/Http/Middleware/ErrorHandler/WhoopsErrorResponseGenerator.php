@@ -8,7 +8,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\RunInterface;
 
-
 class WhoopsErrorResponseGenerator implements ErrorResponseGenerator
 {
     private $whoops;

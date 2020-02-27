@@ -8,7 +8,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Laminas\Stratigility\Exception;
 
-
 final class SinglePassMiddlewareDecorator implements MiddlewareInterface
 {
     private $middleware;

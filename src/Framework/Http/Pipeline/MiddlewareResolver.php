@@ -12,7 +12,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-
 class MiddlewareResolver
 {
     private $responsePrototype;
@@ -54,7 +53,6 @@ class MiddlewareResolver
             }
         }
         throw new UnknownMiddlewareTypeException($handler);
-
     }
 
     private function createPipe(array $handlers): MiddlewarePipe

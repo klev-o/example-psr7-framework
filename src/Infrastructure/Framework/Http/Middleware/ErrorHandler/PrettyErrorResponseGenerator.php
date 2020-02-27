@@ -45,5 +45,4 @@ class PrettyErrorResponseGenerator implements ErrorResponseGenerator
         }
         return $view;
     }
-
 }
