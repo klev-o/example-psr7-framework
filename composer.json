@@ -36,6 +36,7 @@
   "scripts": {
     "serve": "php -S 0.0.0.0:8080 -t public",
     "app": "php bin/console.php --ansi",
+    "doctrine": "doctrine --ansi",
     "migration": "phinx --ansi",
     "check": [
       "@cs-check",
