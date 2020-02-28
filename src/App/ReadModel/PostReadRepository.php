@@ -40,5 +40,6 @@ class PostReadRepository
         $view->title = $row['title'];
         $view->content = $row['content'];
 
+        return $view;
     }
 }
