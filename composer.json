@@ -14,6 +14,7 @@
     "psr/container": "^1.0",
     "psr/http-message": "^1.0",
     "psr/http-server-middleware": "^1.0",
+    "symfony/console": "^5.0",
     "twig/twig": "^3.0"
   },
   "require-dev": {
@@ -32,6 +33,7 @@
   },
   "scripts": {
     "serve": "php -S 0.0.0.0:8080 -t public",
+    "app": "php bin/console.php --ansi",
     "check": [
       "@cs-check",
       "@test"
