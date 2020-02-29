@@ -25,8 +25,8 @@ $this->extend('layout/default');
 
 <h1><?= $this->e($post->title) ?></h1>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
+<div class="card mb-3">
+    <div class="card-header">
         <?= $post->date->format('Y-m-d') ?>
     </div>
     <div class="panel-body"><?= nl2br($this->e($post->content)) ?></div>

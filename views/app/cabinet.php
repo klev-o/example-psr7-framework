@@ -21,8 +21,8 @@
 <?php $this->endBlock(); ?>
 
 <?php $this->beginBlock('sidebar') ?>
-    <div class="panel panel-default">
-        <div class="panel-heading">Cabinet</div>
+    <div class="card mb-3">
+        <div class="card-header">Cabinet</div>
         <div class="panel-body">
             Cabinet navigation
         </div>

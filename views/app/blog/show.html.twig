@@ -18,7 +18,7 @@
     <h1>{{ post.title }}</h1>
 
     <div class="panel panel-primary">
-        <div class="panel-heading">
+        <div class="card-header">
             {{ post.createDate|date('Y-m-d') }}
         </div>
         <<div class="panel-body">{{ post.content.full|nl2br }}</div>
@@ -27,8 +27,8 @@
     <h2>Comments</h2>
 
     {% for comment in post.comments %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
+        <div class="card mb-3">
+            <div class="card-header">
                 <span class="pull-right">{{ comment.date|date('Y-m-d') }}</span>
                 {{ comment.author }}
             </div>

@@ -26,8 +26,8 @@ $this->extend('layout/default');
 
 <?php foreach ($posts as $post): ?>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
+    <div class="card mb-3">
+        <div class="card-header">
             <span class="pull-right"><?= $post->date->format('Y-m-d') ?></span>
             <a href="<?= $this->e($this->path('blog_show', ['id' => $post->id])) ?>"><?= $this->e($post->title) ?></a>
         </div>

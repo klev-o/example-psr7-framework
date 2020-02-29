@@ -12,8 +12,8 @@
         </div>
         <div class="col-md-3">
             <?php $this->block('sidebar', function () { ob_start(); ?>
-                <div class="panel panel-default">
-                    <div class="panel-heading">Site</div>
+                <div class="card mb-3">
+                    <div class="card-header">Site</div>
                     <div class="panel-body">
                         Site navigation
                     </div>
