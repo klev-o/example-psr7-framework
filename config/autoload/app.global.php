@@ -19,7 +19,8 @@ return [
             ErrorHandlerMiddleware::class => Infrastructure\Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddlewareFactory::class,
             ErrorResponseGenerator::class => Infrastructure\Framework\Http\Middleware\ErrorHandler\PrettyErrorResponseGeneratorFactory::class,
             Psr\Log\LoggerInterface::class => Infrastructure\App\Logger\LoggerFactory::class,
+            App\ReadModel\PostReadRepository::class => Infrastructure\App\ReadModel\PostReadRepositoryFactory::class
         ],
     ],
-    'debug' => true,
+    'debug' => false,
 ];
