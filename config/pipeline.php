@@ -15,6 +15,8 @@ $app->pipe(Middleware\ProfilerMiddleware::class);
 //$app->pipe($container->get(Framework\Http\Middleware\RouteMiddleware::class));
 $app->pipe(Framework\Http\Middleware\RouteMiddleware::class);
 
+$app->pipe(Middleware\EmptyResponseMiddleware::class);
+
 //$app->pipe('cabinet', $container->get(Middleware\BasicAuthMiddleware::class));
 $app->pipe('cabinet', Middleware\BasicAuthMiddleware::class);
 
