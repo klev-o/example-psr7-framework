@@ -6,7 +6,7 @@
     <title>{% block title %}{% endblock %} - App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {% block meta %}{% endblock %}
-    <link rel="stylesheet" href="/build/css/app.css" />
+    <link rel="stylesheet" href="/build{{ mix('/css/app.css') }}" />
 </head>
 <body class="app">
 <header class="app-header">
@@ -44,6 +44,6 @@
         <p>&copy; {{ date()|date('Y') }} - App</p>
     </div>
 </footer>
-<script src="/build/js/app.js"></script>
+<script src="/build{{ mix('/js/app.js') }}"></script>
 </body>
 </html>
